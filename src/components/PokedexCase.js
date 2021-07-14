@@ -60,7 +60,8 @@ const PokemonScreenUI = styled.div`
 
   @media only screen and (min-width: 500px) {
     grid-column: 2/12;
-    min-height: 500px;
+    max-height: 540px;
+    min-height: 540px;
   }
 `
 
