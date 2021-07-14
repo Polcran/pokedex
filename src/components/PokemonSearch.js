@@ -22,6 +22,7 @@ const SearchField = styled.input`
 `
 
 const SearchButton = styled.input`
+  -webkit-appearance: none;
   background-color: #353535;
   border: none;
   border-radius: 5px;
