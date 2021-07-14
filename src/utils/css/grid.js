@@ -1,4 +1,4 @@
-import { css } from 'styled-components'
+import { css } from 'styled-components/macro'
 
 const grid = css`
   display: grid;
@@ -6,7 +6,7 @@ const grid = css`
   grid-template-columns: repeat(4, minmax(0, 1fr));
   margin: 0 16px;
 
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 500px) {
     grid-column-gap: 24px;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     margin: 0 24px;

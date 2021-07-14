@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
-import React from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components/macro'
 
 const SearchForm = styled.form`
   display: inline-flex;
@@ -30,19 +30,53 @@ const SearchButton = styled.input`
   padding: 5px 1rem;
 `
 
-const PokemonSearch = ({ className, ...props }) => {
+const PokemonSearch = ({
+  className,
+  pokemonName: externalPokemonName,
+  onSubmit,
+  status,
+  ...props
+}) => {
+  const [pokemonName, setPokemonName] = useState(externalPokemonName)
+
+  useEffect(() => {
+    setPokemonName(externalPokemonName)
+  }, [externalPokemonName])
+
+  const handleNameChange = event => {
+    setPokemonName(event.target.value)
+  }
+
+  const handleSubmit = event => {
+    event.preventDefault()
+    onSubmit(pokemonName)
+  }
+
   return (
     <div className={className}>
-      <SearchForm>
-        <SearchField type="text" placeholder="Pokemon name or ID" />
-        <SearchButton type="submit" value="GO!" />
+      <SearchForm onSubmit={handleSubmit}>
+        <SearchField
+          type="text"
+          placeholder="Pokemon name or ID"
+          value={pokemonName}
+          onChange={handleNameChange}
+        />
+        <SearchButton
+          disabled={!!(status === 'pending' || !pokemonName)}
+          type="submit"
+          value="GO!"
+        />
       </SearchForm>
     </div>
   )
 }
 
 PokemonSearch.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  pokemonName: PropTypes.string,
+  initialPokemonName: PropTypes.string,
+  status: PropTypes.string,
+  onSubmit: PropTypes.func
 }
 
 export default PokemonSearch

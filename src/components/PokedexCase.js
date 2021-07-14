@@ -1,6 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react'
+import styled from 'styled-components/macro'
 import { grid } from '../utils/css/css'
+import PokemonErrorBoundary from './PokemonErrorBoundary'
+import PokemonScreen from './PokemonScreen'
 import PokemonSearch from './PokemonSearch'
 
 const PokedexWrapper = styled.section`
@@ -9,7 +11,12 @@ const PokedexWrapper = styled.section`
   background-color: #a30000;
   border-radius: 10px;
   grid-template-rows: 40px [title] auto 24px [search] auto 24px [screen] auto 40px;
-  padding: 0 16px;
+  max-width: 380px;
+
+  @media only screen and (min-width: 500px) {
+    margin: 0 auto;
+    max-width: 550px;
+  }
 `
 const PookemonTitle = styled.div`
   grid-column: 1/-1;
@@ -38,23 +45,33 @@ const PokemonSearchField = styled(PokemonSearch)`
   grid-column: 1/-1;
   grid-row: search;
   justify-content: space-evenly;
-  justify-self: center;
-  max-width: 330px;
 `
 
-const PokemonScreen = styled.div`
+const PokemonScreenUI = styled.div`
   background-color: #fff;
-  border: 1rem solid #3a3a3a;
+  border: 0.5rem solid #3a3a3a;
+  display: flex;
   grid-column: 1/-1;
   grid-row: screen;
-  min-height: 300px;
+  margin: 0 16px;
+  max-height: 60vh;
+  min-height: 60vh;
+  overflow: auto;
 
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 500px) {
     grid-column: 2/12;
+    min-height: 500px;
   }
 `
 
 const PokedexCase = () => {
+  const [pokemonName, setPokemonName] = useState('')
+  const [status, setStatus] = useState('idle')
+
+  const handlePokemonName = name => {
+    setPokemonName(name)
+  }
+
   return (
     <PokedexWrapper>
       <PookemonTitle>
@@ -65,8 +82,19 @@ const PokedexCase = () => {
         />
         <h1>Pokedex</h1>
       </PookemonTitle>
-      <PokemonSearchField />
-      <PokemonScreen></PokemonScreen>
+      <PokemonSearchField
+        pokemonName={pokemonName}
+        onSubmit={handlePokemonName}
+        status={status}
+      />
+      <PokemonScreenUI>
+        <PokemonErrorBoundary onReset={() => setPokemonName('')}>
+          <PokemonScreen
+            pokemonName={pokemonName}
+            currentStatus={status => setStatus(status)}
+          />
+        </PokemonErrorBoundary>
+      </PokemonScreenUI>
     </PokedexWrapper>
   )
 }
