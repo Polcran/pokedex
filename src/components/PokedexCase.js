@@ -35,6 +35,8 @@ const PookemonTitle = styled.div`
   }
 
   img {
+    display: block;
+    margin: 0 auto;
     max-height: 40px;
   }
 `
