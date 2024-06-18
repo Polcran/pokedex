@@ -41,7 +41,8 @@ const PokemonScreen = ({ pokemonName, currentStatus }) => {
 }
 
 PokemonScreen.propTypes = {
-  pokemonName: PropTypes.string
+  pokemonName: PropTypes.string,
+  currentStatus: PropTypes.func
 }
 
 export default PokemonScreen

@@ -1,9 +1,11 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { createGlobalStyle } from 'styled-components'
 import App from './App'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
+
+const root = createRoot(document.getElementById('root'))
 
 const GlobalsStyle = createGlobalStyle`
   p, span, input {
@@ -16,12 +18,11 @@ const GlobalsStyle = createGlobalStyle`
     letter-spacing: .5px;
   }
 `
-ReactDOM.render(
+root.render(
   <React.StrictMode>
     <GlobalsStyle />
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 )
 
 // If you want to start measuring performance in your app, pass a function
